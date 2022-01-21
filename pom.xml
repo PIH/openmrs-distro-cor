@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.openmrs.module</groupId>
+        <artifactId>pihcore</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.openmrs.distro</groupId>
+    <artifactId>pihemr</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>PIH EMR Distribution</name>
+    <description>Distro project for PIH EMR</description>
+    <url>https://wiki.openmrs.org/display/docs/Mirebalais+Hospital+Module</url>
+
+    <developers>
+        <developer>
+            <name>Partners In Health</name>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>Partners In Health</name>
+        <url>https://pih.org</url>
+    </organization>
+
+    <scm>
+        <connection>scm:git:git@github.com:PIH/openmrs-distro-pihemr.git</connection>
+        <developerConnection>scm:git:git@github.com:PIH/openmrs-distro-pihemr.git</developerConnection>
+        <url>scm:git:git@github.com:PIH/openmrs-distro-pihemr.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>openmrs-repo-modules-pih</id>
+            <name>Modules</name>
+            <url>https://openmrs.jfrog.io/artifactory/modules-pih/</url>
+        </repository>
+        <snapshotRepository>
+            <id>openmrs-repo-modules-pih-snapshots</id>
+            <name>OpenMRS Snapshots</name>
+            <url>https://openmrs.jfrog.io/artifactory/modules-pih-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <properties>
+        <pihcoreVersion>${project.parent.version}</pihcoreVersion>
+        <appShellVersion>next</appShellVersion>
+        <frontendDir>${project.build.directory}/distro/web/frontend</frontendDir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <propertiesEncoding>UTF-8</propertiesEncoding>
+                    <resources>
+                        <resource>
+                            <directory>${basedir}</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>openmrs-distro.properties</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                </configuration>
+            </plugin>
+            <!-- Use the SDK to retrieve the war, modules, and owas -->
+            <plugin>
+                <groupId>org.openmrs.maven.plugins</groupId>
+                <artifactId>openmrs-sdk-maven-plugin</artifactId>
+                <version>4.1.1</version>
+                <executions>
+                    <execution>
+                        <id>build-distro</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>build-distro</goal>
+                        </goals>
+                        <configuration>
+                            <distro>${basedir}/openmrs-distro.properties</distro>
+                            <dir>${project.build.directory}/distro</dir>
+                            <bundled>false</bundled>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Assemble omods, owas, spas, etc into a zip file -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>${basedir}/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>openmrs-repo</id>
+            <name>OpenMRS Nexus Repository</name>
+            <url>https://openmrs.jfrog.io/artifactory/public</url>
+         </repository>
+        <repository>  <!-- Mekom repository, for Initializer -->
+            <id>mks-nexus-public</id>
+            <url>https://nexus.mekomsolutions.net/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/public</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>openmrs-repo</id>
+            <name>OpenMRS Nexus Repository</name>
+            <url>https://openmrs.jfrog.io/artifactory/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
