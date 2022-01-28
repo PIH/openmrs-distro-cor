@@ -1,2 +1,2 @@
-# openmrs-distro-cor
+# openmrs-distro-sescor
 ===============================

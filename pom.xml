@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>org.openmrs.distro</groupId>
-    <artifactId>cor</artifactId>
+    <artifactId>sescor</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>COR EMR Distribution</name>
-    <description>Distro project for COR EMR</description>
+    <name>SESCOR EMR Distribution</name>
+    <description>Distro project for SESCOR EMR</description>
     <url>https://wiki.openmrs.org/display/docs/Mirebalais+Hospital+Module</url>
 
     <developers>
@@ -29,9 +29,9 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git@github.com:PIH/openmrs-distro-cor.git</connection>
-        <developerConnection>scm:git:git@github.com:PIH/openmrs-distro-cor.git</developerConnection>
-        <url>scm:git:git@github.com:PIH/openmrs-distro-cor.git</url>
+        <connection>scm:git:git@github.com:PIH/openmrs-distro-sescor.git</connection>
+        <developerConnection>scm:git:git@github.com:PIH/openmrs-distro-sescor.git</developerConnection>
+        <url>scm:git:git@github.com:PIH/openmrs-distro-sesycor.git</url>
         <tag>HEAD</tag>
     </scm>
 
