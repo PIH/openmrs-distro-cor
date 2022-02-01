@@ -160,7 +160,7 @@ data directory.
 
 Before starting up the server make sure you have watched all the necessary directories that you are going to use, for COR these are:
 
-|Site|Repo  |
+|Repo|Url  |
 |---|---|
 |SES|https://github.com/PIH/openmrs-config-ses|
 |Config-PIHEMR|https://github.com/PIH/openmrs-config-pihemr|
