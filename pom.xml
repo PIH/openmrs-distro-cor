@@ -31,7 +31,7 @@
     <scm>
         <connection>scm:git:git@github.com:PIH/openmrs-distro-sescor.git</connection>
         <developerConnection>scm:git:git@github.com:PIH/openmrs-distro-sescor.git</developerConnection>
-        <url>scm:git:git@github.com:PIH/openmrs-distro-sesycor.git</url>
+        <url>scm:git:git@github.com:PIH/openmrs-distro-sescor.git</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -119,6 +119,60 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>distribution</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <configuration>
+                            <propertiesEncoding>UTF-8</propertiesEncoding>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>debian/**</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>build-debian-package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${project.build.directory}/debian/build.sh</executable>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>publish-debian-package</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${project.build.directory}/debian/publish.sh unstable</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>
